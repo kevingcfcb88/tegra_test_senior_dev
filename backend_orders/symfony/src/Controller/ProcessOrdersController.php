@@ -28,4 +28,13 @@ class ProcessOrdersController
     $aAllOrders = json_encode($orders->getAllOrders());
     return new Response($aAllOrders, Response::HTTP_OK, ['Content-Type' => 'application/json']);
   }
+
+  public function AcceptOrders(Request $request, Utils $utils)
+  {
+    $jAcceptOrders = $utils->acceptOrders($request->getContent());
+    if ($jAcceptOrders->getStatusCode() == 200) {
+      return new Response($jAcceptOrders->getContent(), Response::HTTP_OK);
+    }
+    return new Response($jAcceptOrders->getContent(), Response::HTTP_BAD_REQUEST);
+  }
 }

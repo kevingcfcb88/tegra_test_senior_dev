@@ -3,9 +3,18 @@
 namespace App\Service;
 
 use Exception;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class Utils
 {
+
+  private $client;
+
+  public function __construct(HttpClientInterface $client)
+  {
+    $this->client = $client;
+  }
+
   public function CsvToArray($csvFile)
   {
     $csv = explode(PHP_EOL, $csvFile);
@@ -37,5 +46,21 @@ class Utils
       }
     }
     return json_encode($aNamedArray);
+  }
+
+  public function acceptOrders($aOrders)
+  {
+    try {
+      $jRes = $this->client->request('GET', 'http://backend_artfx:80/api/ProcessingOrders', [
+        'body' => 'json',
+        'body' => ['orders' => $aOrders]
+      ]);
+      if ($jRes->getStatusCode() != 200) {
+        return $jRes->toArray();
+      }
+      return $jRes;
+    } catch (Exception $e) {
+      throw new Exception($e->getMessage());
+    }
   }
 }

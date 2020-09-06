@@ -24,9 +24,10 @@ const OrderTableActions = ({ accept }) => {
     return (
       <thead>
         <tr>
-          <th>Order</th>
-          <th>Style</th>
-          <th>Description</th>
+          <th className="four wide">Order</th>
+          <th className="four wide">Style</th>
+          <th className="ten wide">Description</th>
+          <th className="four wide">Status</th>
           {accept ? <th>Actions</th> : null}
         </tr>
       </thead>
@@ -50,8 +51,9 @@ const OrderTableActions = ({ accept }) => {
             {v.Color ? `-${v.Color}` : null}
           </td>
           <td data-label="description">{v.Description}</td>
+          <td data-label="status">{v.status}</td>
           {accept ? (
-            <td data-label="Job">
+            <td data-label="Job" className="center aligned">
               <i className="paper plane icon"></i>
             </td>
           ) : null}
@@ -60,11 +62,33 @@ const OrderTableActions = ({ accept }) => {
     });
   };
 
+  const onClickAction = (e) => {
+    e.preventDefault();
+    const pendingOrders = orders.filter((v) => {
+      return v.status === 'Pending';
+    });
+
+    axios
+      .post('/api/acceptOrders', { orders: pendingOrders }, {})
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
-    <table className="ui celled table">
-      {getTableHeader()}
-      <tbody>{getTableContent()}</tbody>
-    </table>
+    <div>
+      <table className="ui celled table">
+        {getTableHeader()}
+        <tbody>{getTableContent()}</tbody>
+      </table>
+      <div className="ui divider"></div>
+      <button className="positive ui button" onClick={(e) => onClickAction(e)}>
+        Accept Orders
+      </button>
+    </div>
   );
 };
 

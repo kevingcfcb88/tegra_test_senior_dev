@@ -12,21 +12,18 @@ namespace backend_artfx.Controllers
   [ApiController]
   public class ProcessingOrdersController : ControllerBase
   {
+    public const string SessionKeyName = "_Name";
 
     [HttpGet]
     public IActionResult ListOrders()
     {
-      return StatusCode(200, new { message = "Orders processed" });
+      return StatusCode(200, new { message = "List of orders" });
     }
 
     [HttpPost]
-    public IActionResult ProcessOrders([FromBody] int id)
+    public IActionResult ProcessOrders()
     {
-      if (id == 0)
-      {
-        return StatusCode(400, new { message = "Empty parameters" });
-      }
-      return StatusCode(200, new { message = "Orders processed" });
+      return StatusCode(200, new { message = "Processing Orders" });
     }
   }
 }
