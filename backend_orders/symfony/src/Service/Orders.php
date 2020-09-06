@@ -24,7 +24,8 @@ class Orders
 
   public function AddOrders($aOrders)
   {
-    $aAllOrders = json_decode($this->session->get('aOrders'), true);
+    $getAllOrders = $this->session->get('aOrders');
+    $aAllOrders = empty($getAllOrders) ? [] : json_decode($getAllOrders, true);
     $aOrders = json_decode($aOrders, true);
     try {
       foreach ($aOrders as $order) {

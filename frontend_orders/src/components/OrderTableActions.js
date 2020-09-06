@@ -2,37 +2,68 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const OrderTableActions = ({ accept }) => {
+  const [orders, setOrders] = useState();
+
   useEffect(() => {
-    const getAllOrders = async () => {
-      const res = await axios.get('/api/getOrders');
-      console.log(res.data);
-    };
-
     getAllOrders();
-  });
+  }, []);
 
-  return (
-    <table className="ui celled table">
+  const getAllOrders = async () => {
+    try {
+      const res = await axios.get('/api/getOrders');
+      if (res.data) {
+        const response = JSON.parse(res.data);
+        setOrders(Object.entries(response).map((v) => v[1]));
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getTableHeader = () => {
+    return (
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Age</th>
-          <th>Job</th>
+          <th>Order</th>
+          <th>Style</th>
+          <th>Description</th>
           {accept ? <th>Actions</th> : null}
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td data-label="Name">James</td>
-          <td data-label="Age">24</td>
-          <td data-label="Job">Engineer</td>
+    );
+  };
+
+  const getTableContent = () => {
+    if (!orders) {
+      return null;
+    }
+    return orders.map((v) => {
+      console.log(v);
+      return (
+        <tr key={v.id}>
+          <td data-label="order">
+            {v.Order}
+            {v.Line ? `-${v.Line}` : null}
+          </td>
+          <td data-label="style">
+            {v.Style}
+            {v.Color ? `-${v.Color}` : null}
+          </td>
+          <td data-label="description">{v.Description}</td>
           {accept ? (
             <td data-label="Job">
               <i className="paper plane icon"></i>
             </td>
           ) : null}
         </tr>
-      </tbody>
+      );
+    });
+  };
+
+  return (
+    <table className="ui celled table">
+      {getTableHeader()}
+      <tbody>{getTableContent()}</tbody>
     </table>
   );
 };
