@@ -27,7 +27,7 @@ function App() {
               labelText="Choose file to upload"
               buttonText="Upload"
               method="post"
-              sendTo="/"
+              sendTo="/api/processOrders"
             />
           </div>{' '}
         </Route>{' '}
