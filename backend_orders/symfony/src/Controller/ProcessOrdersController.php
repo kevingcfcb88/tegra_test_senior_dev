@@ -5,14 +5,21 @@ namespace App\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use App\Service\Utils;
+use App\Service\Orders;
+use stdClass;
 
 class ProcessOrdersController
 {
 
-  public function ProcessingOrder(Request $request, Utils $utils)
+  public function ProcessingOrder(Request $request, Utils $utils, Orders $orders)
   {
     $array = $utils->CsvToArray(file_get_contents($request->files->get('file')));
+    $bAddingOrders = $orders->AddOrders($array);
 
-    return new Response(print_r($array));
+    if ($bAddingOrders == true) {
+      return new Response(json_encode(new stdClass), Response::HTTP_OK);
+    }
+
+    return new Response($bAddingOrders, Response::HTTP_BAD_REQUEST);
   }
 }

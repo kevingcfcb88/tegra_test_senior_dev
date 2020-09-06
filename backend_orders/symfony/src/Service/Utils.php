@@ -2,6 +2,8 @@
 
 namespace App\Service;
 
+use Exception;
+
 class Utils
 {
   public function CsvToArray($csvFile)
@@ -9,9 +11,12 @@ class Utils
     $csv = explode(PHP_EOL, $csvFile);
     $array = array();
     foreach ($csv as $line) {
-      $array[] = str_getcsv($line);
+      if (strlen($line) > 0) {
+        $array[] = str_getcsv($line);
+      }
     }
 
-    return $array;
+    //With array_splice the header is removed
+    return array_splice($array, 1);
   }
 }
