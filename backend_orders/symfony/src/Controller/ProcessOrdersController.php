@@ -22,4 +22,10 @@ class ProcessOrdersController
 
     return new Response($bAddingOrders, Response::HTTP_BAD_REQUEST);
   }
+
+  public function GetAllOrders(Orders $orders)
+  {
+    $aAllOrders = json_encode($orders->getAllOrders());
+    return new Response($aAllOrders, Response::HTTP_OK, ['Content-Type' => 'application/json']);
+  }
 }

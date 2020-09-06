@@ -13,7 +13,7 @@ function App() {
         <Route path="/" exact>
           <NavigationBar active="/" />
           <AcceptOrders />
-        </Route>{' '}
+        </Route>
         <Route path="/uploadOrders" exact>
           <NavigationBar active="upload" />
           <div className="ui raised very padded text container segment">
@@ -29,10 +29,10 @@ function App() {
               method="post"
               sendTo="/api/processOrders"
             />
-          </div>{' '}
-        </Route>{' '}
-        <Route component={Error404} />{' '}
-      </Switch>{' '}
+          </div>
+        </Route>
+        <Route component={Error404} />
+      </Switch>
     </div>
   );
 }

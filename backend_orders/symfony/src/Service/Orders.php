@@ -24,16 +24,18 @@ class Orders
 
   public function AddOrders($aOrders)
   {
-    $aAllOrders = $this->session->get('aOrders');
+    $aAllOrders = json_decode($this->session->get('aOrders'), true);
+    $aOrders = json_decode($aOrders, true);
     try {
       foreach ($aOrders as $order) {
-        $order[count($order)] = "Pending";
+        $order["status"] = "Pending";
         array_push($aAllOrders, $order);
       }
     } catch (Exception $e) {
       throw new Exception($e->getMessage());
     }
-    $this->session->set('aOrders', $aAllOrders);
+    $this->session->set('aOrders', json_encode($aAllOrders));
+    print_r($this->session->get('aOrders'));
     return true;
   }
 }
