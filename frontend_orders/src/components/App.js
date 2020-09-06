@@ -19,7 +19,7 @@ function App() {
           <div className="ui raised very padded text container segment">
             <h2 className="ui header"> Upload Orders </h2>
             <DownloadExcelTemplate
-              path="/template_orders.xlsx"
+              path="/template_orders.csv"
               text="Download Template"
               divider="true"
             />

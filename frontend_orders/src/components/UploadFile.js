@@ -29,7 +29,7 @@ const UploadFile = ({ labelText, buttonText, method, sendTo }) => {
           type="file"
           id="file"
           name="file"
-          accept=".xls, .xlsx, .csv"
+          accept=".csv"
           onChange={(e) => setFile(e.target.files[0])}
         />
       </div>
