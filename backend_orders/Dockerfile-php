@@ -3,7 +3,7 @@ FROM php:fpm-stretch
 RUN apt-get update && apt-get install -y
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-  git zlib1g-dev libxml2-dev libzip-dev && docker-php-ext-install zip intl mysqli pdo pdo_mysql
+  git zlib1g-dev libxml2-dev libzip-dev libpng-dev && docker-php-ext-install zip intl mysqli pdo pdo_mysql && docker-php-ext-install -j$(nproc) gd
 
 RUN curl -SS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer
 

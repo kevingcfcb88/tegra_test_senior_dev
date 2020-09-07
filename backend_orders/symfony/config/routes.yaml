@@ -1,3 +1,17 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+process_orders:
+  path: /api/processOrders
+  controller: App\Controller\ProcessOrdersController::ProcessingOrder
+  methods: POST
+
+get_orders:
+  path: /api/getOrders
+  controller: App\Controller\ProcessOrdersController::GetAllOrders
+  methods: GET
+
+accept_orders:
+  path: /api/acceptOrders
+  controller: App\Controller\ProcessOrdersController::AcceptOrders
+  methods: POST
